@@ -1,0 +1,36 @@
+{
+    "name": "helhum/env-ts",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "description": "Writes environment variables as TypoScript constant file",
+    "keywords": [
+        "composer", "env", "typoscript"
+    ],
+    "homepage": "http://github.com/helhum/helhum/env-ts",
+    "authors": [
+        {
+            "name": "Helmut Hummel",
+            "email": "info@helhum.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Helhum\\EnvTs\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "composer-plugin-api": "^1.0"
+    },
+    "require-dev": {
+        "composer/composer": "^1.0.0",
+        "phpunit/phpunit": "~4.8.0",
+        "mikey179/vfsStream": "~1.6.0"
+    },
+    "extra": {
+        "class": "Helhum\\EnvTs\\Plugin",
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
