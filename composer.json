@@ -27,10 +27,13 @@
         "phpunit/phpunit": "~4.8.0",
         "mikey179/vfsStream": "~1.6.0"
     },
+    "suggest": {
+        "helhum/dotenv-connector": "^1.1"
+    },
     "extra": {
         "class": "Helhum\\EnvTs\\Plugin",
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.2.x-dev"
         }
     }
 }

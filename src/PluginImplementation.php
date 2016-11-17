@@ -43,6 +43,13 @@ class PluginImplementation
      */
     public function postAutoloadDump()
     {
+        // Establish environment variables from dotenv-connector if it is present
+        $dotEnvInclusionFile = $this->event->getComposer()->getConfig()->get('vendor-dir') . '/helhum/dotenv-include.php';
+        if (file_exists($dotEnvInclusionFile)) {
+            require_once $dotEnvInclusionFile;
+        }
+
+        // Write constants files for each package
         $packageMap = $this->extractPackageMapFromComposer($this->event->getComposer());
         foreach ($packageMap as $item) {
             /** @var PackageInterface $package */
