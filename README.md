@@ -4,7 +4,7 @@ This is a composer plugin, that writes environment
 variables to a TypoScript constants file.
 
 This package is the missing link to be able to provide different TypoScript settings
-for TYPO3 installations in different environments
+for TYPO3 installations in different environments.
 
 ## configuration options
 
@@ -14,15 +14,14 @@ You configure env ts in the extra section of a `composer.json` in any package li
   "extra": {
       "helhum/env-ts": {
           "files": {
-              "path/to/environment.t3s": [
-                  "PAGE-ROOT",
-                  "PAGE-IMPRINT",
-                  "PAGE-CUSTOMER_LOGIN"
+              "Configuration/TypoScript/Constants/environment.ts": [
+                  "WEBEX_",
+                  "INXMAIL_"
               ]
           }
           "prefix": "environment"
-          "array-delimiter": "-",
-          "lower-camel-case": true
+          "array-delimiter": "",
+          "lower-camel-case": false
       }
     }
 ```

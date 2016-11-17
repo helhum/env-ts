@@ -1,8 +1,6 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
   - 5.5
   - 5.6
   - 7
@@ -23,7 +21,7 @@ notifications:
     - typo3@helhum.io
 
 before_install:
-  - phpenv config-rm xdebug.ini
+  - if php -i | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
   - composer self-update
   - composer --version
 
