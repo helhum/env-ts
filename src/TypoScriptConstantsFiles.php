@@ -88,7 +88,7 @@ class TypoScriptConstantsFiles
     {
         $constantVarName = $envVarName;
         if ($this->config->get('array-delimiter')) {
-            $constantVarName = str_replace('-', '.', $constantVarName);
+            $constantVarName = str_replace((string)$this->config->get('array-delimiter'), '.', $constantVarName);
         }
         if ($this->config->get('lower-camel-case')) {
             // Expression taken from \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase()
