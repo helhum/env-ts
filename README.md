@@ -26,25 +26,25 @@ You configure env ts in the extra section of a `composer.json` in any package li
     }
 ```
 
-#### `files`
+#### `files` [array]
 Multiple files (path relative to package dir) can be specified as key and which environment variable prefixes should be included.
 In the above example it would have been enough to specify the prefix `PAGE-`
 
-#### `prefix`
+#### `prefix` [string]
 By default environment variables are passed as is to the constants file.
 But it is possible to specify a prefix for the constants.
 In the above example `environment.page.root` is written for env var `PAGE-ROOT`
 
 *The default value* is `environment`
 
-#### `array-delimiter`
+#### `array-delimiter` [string]
 By default environment variables are passed as is to the constants file.
 But it is possible to specify an array delimiter of the environment vars to be transformed into an
 array part of the constants. In the above example `environment.page.root` is written for env var `PAGE-ROOT`
 
 *The default value* is `-`
 
-#### `lower-camel-case`
+#### `lower-camel-case` [bool]
 Whether the constant name should rather be lower camel cased than totally upper cased.
 In the above example `environment.page.customerLogin` is written for env var `PAGE-CUSTOMER_LOGIN`
 
