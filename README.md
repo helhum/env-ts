@@ -14,14 +14,15 @@ You configure env ts in the extra section of a `composer.json` in any package li
   "extra": {
       "helhum/env-ts": {
           "files": {
-              "Configuration/TypoScript/Constants/environment.ts": [
-                  "WEBEX_",
-                  "INXMAIL_"
+              "path/to/environment.t3s": [
+                  "PAGE-ROOT",
+                  "PAGE-IMPRINT",
+                  "PAGE-CUSTOMER_LOGIN"
               ]
-          }
-          "prefix": "environment"
-          "array-delimiter": "",
-          "lower-camel-case": false
+          },
+          "prefix": "environment",
+          "array-delimiter": "-",
+          "lower-camel-case": true
       }
     }
 ```
