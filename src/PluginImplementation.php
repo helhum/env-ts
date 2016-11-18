@@ -10,6 +10,7 @@ namespace Helhum\EnvTs;
  * file that was distributed with this source code.
  */
 
+use Composer\Config as ComposerConfig;
 use Composer\Package\PackageInterface;
 use Composer\Script\Event;
 
@@ -43,17 +44,20 @@ class PluginImplementation
      */
     public function postAutoloadDump()
     {
+        $composerConfig = $this->event->getComposer()->getConfig();
         // Establish environment variables from dotenv-connector if it is present
-        $dotEnvInclusionFile = $this->event->getComposer()->getConfig()->get('vendor-dir') . '/helhum/dotenv-include.php';
+        $dotEnvInclusionFile = $composerConfig->get('vendor-dir') . '/helhum/dotenv-include.php';
         if (file_exists($dotEnvInclusionFile)) {
             require_once $dotEnvInclusionFile;
         }
 
         // Write constants files for each package
         $packageMap = $this->extractPackageMapFromComposer($this->event->getComposer());
+        $basePath = realpath(substr($composerConfig->get('vendor-dir'), 0, -strlen($composerConfig->get('vendor-dir', ComposerConfig::RELATIVE_PATHS))));
         foreach ($packageMap as $item) {
             /** @var PackageInterface $package */
             list($package, $installPath) = $item;
+            $installPath = ($installPath ?: $basePath);
 
             $tsFiles = new TypoScriptConstantsFiles(
                 PackageConfig::createFromPackage(
