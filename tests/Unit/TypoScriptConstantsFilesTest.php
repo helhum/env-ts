@@ -71,4 +71,25 @@ class TypoScriptConstantsFilesTest extends \PHPUnit_Framework_TestCase
         $fileContent = file_get_contents('vfs://package-dir/foo/Config/TS/Evn.t3s');
         $this->assertSame('', $fileContent);
     }
+
+    /**
+     * @test
+     * @expectedException \RuntimeException
+     * @expectedExceptionCode 1479428249
+     */
+    public function throwsExceptionOnInvalidPath()
+    {
+        $mockedPackage = $this->getMockBuilder(PackageInterface::class)->disableOriginalConstructor()->getMock();
+        $mockedPackage->expects($this->any())
+            ->method('getExtra')
+            ->willReturn(['helhum/env-ts' => ['files' => [
+                '../../Evn.t3s' => ['FOO_']
+            ]]]);
+        $root = vfsStream::setup('package-dir');
+        $root->addChild(vfsStream::newDirectory('foo'));
+        $config = PackageConfig::createFromPackage($mockedPackage, 'vfs://package-dir/foo');
+
+        $constantsFile = new TypoScriptConstantsFiles($config);
+        $constantsFile->write();
+    }
 }

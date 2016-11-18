@@ -13,6 +13,7 @@ namespace Helhum\EnvTs;
 use Composer\Config as ComposerConfig;
 use Composer\Package\PackageInterface;
 use Composer\Script\Event;
+use Composer\Util\Filesystem;
 
 /**
  * Class Plugin
@@ -63,7 +64,9 @@ class PluginImplementation
                 PackageConfig::createFromPackage(
                     $package,
                     $installPath
-                )
+                ),
+                new Filesystem(),
+                $this->event->getIO()
             );
             $tsFiles->write();
         }

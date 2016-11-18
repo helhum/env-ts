@@ -30,18 +30,11 @@ class PackageConfig
     ];
 
     /**
-     * @var string
-     */
-    protected $packageInstallDir;
-
-    /**
      * @param array $config
-     * @param string $packageInstallDir
      */
-    public function __construct(array $config, $packageInstallDir)
+    public function __construct(array $config)
     {
         $this->merge($config);
-        $this->packageInstallDir = $packageInstallDir;
     }
 
     /**
@@ -70,6 +63,9 @@ class PackageConfig
                     $files[$processedFile] = $prefixes;
                 }
                 return $files;
+            case 'package-name':
+            case 'package-install-dir':
+                return $this->config[$key];
             default:
                 if (!isset($this->config[$key])) {
                     return null;
@@ -141,14 +137,13 @@ class PackageConfig
     private function realpath($path)
     {
         if ($path === '') {
-            return $this->packageInstallDir;
+            return $this->config['package-install-dir'];
         }
 
         if ($path[0] === '/' || $path[1] === ':') {
             return $path;
         }
-
-        return $this->packageInstallDir . '/' . $path;
+        return $this->config['package-install-dir'] . '/' . $path;
     }
 
     /**
@@ -163,10 +158,9 @@ class PackageConfig
         if (isset($extraConfig['helhum/env-ts']) && is_array($extraConfig['helhum/env-ts'])) {
             $packageConfig = $extraConfig['helhum/env-ts'];
         }
-        $config = new static(
-            $packageConfig,
-            $packageInstallDir
-        );
+        $config = new static($packageConfig);
+        $config->config['package-install-dir'] = $packageInstallDir;
+        $config->config['package-name'] = $package->getName();
 
         return $config;
     }

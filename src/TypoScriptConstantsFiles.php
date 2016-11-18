@@ -10,6 +10,8 @@ namespace Helhum\EnvTs;
  * file that was distributed with this source code.
  */
 
+use Composer\IO\IOInterface;
+use Composer\IO\NullIO;
 use Composer\Util\Filesystem;
 
 /**
@@ -28,22 +30,46 @@ class TypoScriptConstantsFiles
     private $filesystem;
 
     /**
+     * @var IOInterface
+     */
+    private $io;
+
+    /**
      * TypoScriptConstantsFiles constructor.
      *
      * @param PackageConfig $config
+     * @param Filesystem $filesystem
+     * @param IOInterface $io
      */
-    public function __construct(PackageConfig $config, Filesystem $filesystem = null)
+    public function __construct(PackageConfig $config, Filesystem $filesystem = null, IOInterface $io = null)
     {
         $this->config = $config;
         $this->filesystem = $filesystem ?: new Filesystem();
+        $this->io = $io ?: new NullIO();
     }
 
     public function write()
     {
-        foreach ($this->config->get('files') as $fileName => $prefixes) {
+        foreach ($this->config->get('files', PackageConfig::RELATIVE_PATHS) as $fileName => $prefixes) {
+            $this->io->writeError(sprintf('<info>Writing file "%s" in package "%s"</info>', $fileName, $this->config->get('package-name')));
+            $fileName = $this->getAbsolutePath($fileName);
             $this->filesystem->ensureDirectoryExists(dirname($fileName));
             file_put_contents($fileName, $this->generateContentFromPrefixes($prefixes));
         }
+    }
+
+    /**
+     * @param string $fileName
+     * @return string
+     * @throws \RuntimeException
+     */
+    private function getAbsolutePath($fileName)
+    {
+        $absolutePath = $this->filesystem->normalizePath($this->config->get('package-install-dir') . '/' . $fileName);
+        if (strpos($absolutePath, $this->config->get('package-install-dir')) !== 0) {
+            throw new \RuntimeException(sprintf('The path "%s" invalid, because it is not within path of the package "%s"', $fileName, $this->config->get('package-name')), 1479428249);
+        }
+        return $absolutePath;
     }
 
     /**
