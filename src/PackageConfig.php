@@ -25,7 +25,7 @@ class PackageConfig
     protected $config = [
         'files' => [],
         'prefix' => 'environment',
-        'array-delimiter' => '-',
+        'array-delimiter' => '__',
         'lower-camel-case' => true,
     ];
 

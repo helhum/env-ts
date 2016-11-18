@@ -34,8 +34,8 @@ class TypoScriptConstantsFilesTest extends \PHPUnit_Framework_TestCase
         $root = vfsStream::setup('package-dir');
         $root->addChild(vfsStream::newDirectory('foo'));
         $config = PackageConfig::createFromPackage($mockedPackage, 'vfs://package-dir/foo');
-        $_ENV['FOO_BAR-BAZ'] = 'foobarbaz';
-        $_ENV['FOO_BLA-BAZ'] = 'fooblabaz';
+        $_ENV['FOO_BAR__BAZ'] = 'foobarbaz';
+        $_ENV['FOO_BLA__BAZ'] = 'fooblabaz';
 
         $constantsFile = new TypoScriptConstantsFiles($config);
         $constantsFile->write();
