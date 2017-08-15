@@ -66,7 +66,8 @@ class TypoScriptConstantsFiles
     private function getAbsolutePath($fileName)
     {
         $absolutePath = $this->filesystem->normalizePath($this->config->get('package-install-dir') . '/' . $fileName);
-        if (strpos($absolutePath, $this->config->get('package-install-dir')) !== 0) {
+        $packageInstallDir = $this->filesystem->normalizePath($this->config->get('package-install-dir'));
+        if (strpos($absolutePath, $packageInstallDir) !== 0) {
             throw new \RuntimeException(sprintf('The path "%s" invalid, because it is not within path of the package "%s"', $fileName, $this->config->get('package-name')), 1479428249);
         }
         return $absolutePath;
