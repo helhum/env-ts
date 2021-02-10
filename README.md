@@ -1,3 +1,5 @@
+# This package is deprecated and will not be maintained any more
+
 # env ts [![Build Status](https://travis-ci.org/helhum/env-ts.svg?branch=master)](https://travis-ci.org/helhum/env-ts)
 
 This is a composer plugin, that writes environment
